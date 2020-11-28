@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout" th:with="title='F�nix - Mutuales'">
+
+
+<th:block layout:fragment="content-head">
+                <link rel="stylesheet" th:href="@{/webjars/datatables/css/jquery.dataTables.min.css}"></link>
+                <link rel="stylesheet" th:href="@{/webjars/datatables/css/dataTables.bootstrap.min.css}"></link>
+</th:block>
+
+
+<th:block layout:fragment="content-header">
+	 <section class="content-header">
+	   <h3>
+	     Administrar Vehiculos
+	   </h3>
+	   <ol class="breadcrumb">  <li><a th:href="@{/index}" ><i class="fa fa-home"></i> Inicio</a></li>
+	     <li><a th:href="@{/genoma/vehiculos}" class="active"><i class="fa fa-plus-square"></i> Vehiculos</a></li>      
+	   </ol>
+	 </section> 
+</th:block>
+
+<th:block layout:fragment="content">
+	<section class="content">
+
+		<div class="box">
+            <div class="box-body">
+              <div class="alert alert-success" id="success-alert" role="alert" hidden="true">
+  					Operación Exitosa
+			  </div>
+			  
+			  <div class="alert alert-danger" id="error-alert" role="alert" hidden="true">
+  					Ocurrió un error al realizar la operación
+			  </div>
+            
+              <table id="tblVehiculos" class="table table-bordered table-striped" style="width: 100%;">
+                <thead>
+                <tr>
+                  <th class="text-left">Id</th>
+                  <th class="text-left">Marca</th>
+                  <th class="text-left">Modelo</th>
+                  <th class="text-left">Anio</th>  
+                  <th class="text-left">Color</th>                  
+				  <th class="text-center">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>                        
+                </tbody>
+              </table>
+              <div class="form-group pull-right" style="margin-right:7px; padding-right:1em;">
+              	 <button type="button" onclick="showVehiculoModal();" class="btn btn-success">Nuevo Vehiculo</button>
+              </div>
+              <div class="form-group pull-left">
+              	 <a type="button" class="btn btn-default" th:href="@{/api/vehiculos/pdf}" target="_blank"><i class="fa fa-print"></i> Imprimir</a>
+              </div>             
+            </div>
+            <!-- /.box-body -->
+ 		</div>
+	</section>
+
+
+
+	<!--  
+	#############################################################
+    Modal Alta Vehiculo
+ 	#############################################################  
+ 	-->
+	<div id="modal-entidad-2" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="salir();"><i class="fa fa-close"></i> </button>
+	        		<h4 id="modal-entidad-2-title" class="modal-title">Nuevo vehiculo</h4>
+	      		</div>
+	      		<form id="frmVehiculo" data-toggle="validator">
+		      		<div class="modal-body">
+		       			<input type="hidden" id="accion-form" name="accion-form" value="POST"/>
+		       			<input type="hidden" id="txtVersion" name="txtVersion"/>
+		       			<input type="hidden" id="txtId" name="txtId"/>
+		        	
+				        <div class="form-group">
+				        	<label for="txtMarca">Marca</label>
+				        	<input type="text" required="required" id="txtMarca" class="form-control" name="txtMarca" placeholder="Marca" pattern="[a-zA-Z ]{3,50}" data-onlyletters="true"/>
+				        	<div class="help-block with-errors"></div>
+				        </div>
+		        	        
+				        <div class="form-group">
+				        	<label for="txtModelo">Modelo</label>
+				        	<input type="text" required="required" id="txtModelo" class="form-control" name="txtModelo" placeholder="Modelo" pattern="[a-zA-Z ]{3,50}" data-onlyletters="true"/>
+				        	<div class="help-block with-errors"></div>
+				        </div>        
+		
+						<div class="row">
+							<div class="col-md-4">	
+								<div class="form-group">
+						        	<label for="txtAnio">Anio</label>
+						        	<input type="number" required="required" id="txtAnio" class="form-control" name="txtAnio" placeholder="99999999" data-lengthnumdoc="true"/>
+						        	<div class="help-block with-errors"></div>
+						        </div>
+						    </div>
+						</div>
+						
+						 <div class="form-group">
+				        	<label for="txtColor">Color</label>
+				        	<input type="text" required="required" id="txtColor" class="form-control" name="txtColor" placeholder="Color"/>
+				        	<div class="help-block with-errors"></div>
+				        </div>
+				        
+						     	        
+	      			</div>
+	      			<div class="alert alert-danger" id="error-form-alert" role="alert" hidden="true">
+		  			</div>
+	            
+			      	<div class="modal-footer">
+			        	<button type="button" class="btn btn-default" onclick="salir();">Cancelar</button>
+			        	<button type="submit" id="btnProcesar" class="btn btn-primary">Guardar</button>			        	
+			      	</div>
+	      		</form>
+	    	</div><!-- /.modal-content -->
+	  	</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+ 	
+</th:block>
+
+
+<th:block layout:fragment="footer-script">
+	<script th:src="@{/webjars/bootstrap-validator/dist/validator.min.js}"></script>
+	<script th:src="@{/webjars/datatables/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/webjars/datatables/js/dataTables.bootstrap.min.js}"></script>	
+	<script th:src="@{/js/secured/usuario/vehiculos.js}"></script>	
+</th:block>
+
+
+</html>
